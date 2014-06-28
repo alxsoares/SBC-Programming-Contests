@@ -45,4 +45,6 @@ int main() {
 
     for(i = 0; i < vec_length; i++)
         printf("%d ", vec[i]);
+        
+    return 0;
 }
