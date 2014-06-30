@@ -18,14 +18,14 @@
 */
 
 int compare_asc(const void *a, const void *b) {
-    if((int *) a == (int *) b) return 0;
-    else if((int *) a > (int *) b) return -1;
-    else return 1;
+    if(*(float *) a == *(float *) b) return 0;
+    else if(*(float *) a > *(float *) b) return 1;
+    else return -1;
 }
 
 int compare_desc(const void *a, const void *b) {
-    if(*(int *) a == *(int *) b) return 0;
-    else if(*(int *) a > *(int *) b) return -1;
+    if(*(float *) a == *(float *) b) return 0;
+    else if(*(float *) a > *(float *) b) return -1;
     else return 1;
 }
 
