@@ -3,12 +3,12 @@
 #define K 26
 #define MAXLEN 250052
 
+int sz, last;
+char A[MAXLEN], B[MAXLEN];
+
 struct state {
 	int length, link, next[K];
 } st[MAXLEN*2-1];
-
-int sz, last;
-char A[MAXLEN], B[MAXLEN];
 
 void init() {
 	st[0].link = -1;
