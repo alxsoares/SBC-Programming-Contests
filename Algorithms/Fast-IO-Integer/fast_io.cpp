@@ -155,14 +155,14 @@ int main() {
     FastOutput out;
 
     // Input
-	int x = next_int();
+    int x = next_int();
 
     // Output
     writeInt(x);
 
     // Another way to implement output
-	out.PrintUint(x, '\n');
-	out.Flush();
+    out.PrintUint(x, '\n');
+    out.Flush();
 
-	return 0;
+    return 0;
 }
