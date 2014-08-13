@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#define pc(x) putchar_unlocked(x);
 typedef unsigned int uint;
 
 uint next_int() {
@@ -14,6 +15,18 @@ uint next_int() {
 		res += (ch - '0');
 	} while((ch = getc_unlocked(stdin)) >= '0');
 	return res;
+}
+
+
+inline void writeInt(uint n) {
+    uint N = n, rev, count = 0;
+    rev = N;
+    if (N == 0) { pc('0'); pc('\n'); return ;}
+    while ((rev % 10) == 0) { count++; rev /= 10;}
+    rev = 0;
+    while (N != 0) { rev = (rev<<3) + (rev<<1) + N % 10; N /= 10;}
+    while (rev != 0) { pc(rev % 10 + '0'); rev /= 10;}
+    while (count--) pc('0');
 }
 
 class FastOutput {
@@ -145,6 +158,9 @@ int main() {
 	int x = next_int();
 
     // Output
+    writeInt(x);
+
+    // Another way to implement output
 	out.PrintUint(x, '\n');
 	out.Flush();
 
