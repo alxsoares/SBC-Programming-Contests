@@ -5,19 +5,48 @@
 #define pc(x) putchar_unlocked(x);
 typedef unsigned int uint;
 
+/*
+    Unsigned int is interesting in certain cases,
+    because it uses less processing (involving fewer logic gates).
+
+    We are using registers to increase the performance of storage
+    integer or long values.
+
+    Usually it is not recommended to use these methods for I/O in
+    professional environment because scanf, printf, cin and cout
+    are prepared in case of errors.
+
+    It is recommended to be used in situations that you have large
+    input values and you really know that you only have integer
+    or long values to be processed.
+*/
+
 uint next_int() {
 	register uint res = 0;
 	register char ch;
 
+    /*  While you don't pass any value, the program will wait.
+    */
 	while((ch = getc_unlocked(stdin)) < '0') {}
+
+	/*  getc_unlocked will return the next character from the input.
+        The character '0' is when you press enter.
+    */
 	do {
+        /*  Converting each character in decimal values.
+            If your input character is less than '0', is because
+            you probably pressed enter or other invalid character.
+        */
 		res *= 10;
 		res += (ch - '0');
 	} while((ch = getc_unlocked(stdin)) >= '0');
 	return res;
 }
 
-
+/*
+    Here we use putchar_unlocked to return values (similar to printf).
+    The value n is converted in binary and putchar_unlocked will print the value.
+*/
 inline void writeInt(uint n) {
     uint N = n, rev, count = 0;
     rev = N;
@@ -29,140 +58,10 @@ inline void writeInt(uint n) {
     while (count--) pc('0');
 }
 
-class FastOutput {
-	public:
-		FastOutput() {
-			m_dataOffset = 0;
-		}
-		~FastOutput() {
-		}
-
-		void Flush() {
-			if (m_dataOffset) {
-				if (write(1, m_data, m_dataOffset));
-				m_dataOffset = 0;
-			}
-		}
-
-		void PrintUint(uint32_t v, char d) {
-			if (m_dataOffset + 11 > sizeof(m_data)) Flush();
-			if (v < 100000) {
-				if (v < 1000) {
-					if (v < 10) {
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 1;
-					} else if (v < 100) {
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 2;
-					} else {
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 3;
-					}
-				} else {
-					if (v < 10000) {
-						m_data[m_dataOffset + 3] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 4;
-					} else {
-						m_data[m_dataOffset + 4] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 3] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 5;
-					}
-				}
-			} else {
-				if (v < 100000000) {
-					if (v < 1000000) {
-						m_data[m_dataOffset + 5] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 4] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 3] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 6;
-					} else if (v < 10000000) {
-						m_data[m_dataOffset + 6] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 5] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 4] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 3] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 7;
-					} else {
-						m_data[m_dataOffset + 7] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 6] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 5] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 4] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 3] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 8;
-					}
-				} else {
-					if (v < 1000000000) {
-						m_data[m_dataOffset + 8] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 7] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 6] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 5] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 4] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 3] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 9;
-					} else {
-						m_data[m_dataOffset + 9] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 8] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 7] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 6] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 5] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 4] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 3] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 2] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 1] = v - v / 10 * 10 + 48; v /= 10;
-						m_data[m_dataOffset + 0] = v + 48;
-						m_dataOffset += 10;
-					}
-				}
-			}
-			m_data[m_dataOffset++] = d;
-		}
-
-		void PrintChar(char d) {
-			if (m_dataOffset + 1 > sizeof(m_data)) Flush();
-			m_data[m_dataOffset++] = d;
-		}
-
-		void ReplaceChar(int offset, char d) {
-			m_data[m_dataOffset + offset] = d;
-		}
-
-	public:
-		uint8_t m_data[32768];
-		size_t m_dataOffset;
-};
-
 int main() {
-    FastOutput out;
-
     // Input
     int x = next_int();
-
     // Output
     writeInt(x);
-
-    // Another way to implement output
-    out.PrintUint(x, '\n');
-    out.Flush();
-
     return 0;
 }
