@@ -25,13 +25,13 @@ uint next_int() {
 	register uint res = 0;
 	register char ch;
 
-    /*  While you don't pass any value, the program will wait.
-    */
+    	/*  While you don't pass any value, the program will wait.
+    	*/
 	while((ch = getc_unlocked(stdin)) < '0') {}
 
 	/*  getc_unlocked will return the next character from the input.
-        The character '0' is when you press enter.
-    */
+            The character '0' is when you press enter.
+    	*/
 	do {
         /*  Converting each character in decimal values.
             If your input character is less than '0', is because
